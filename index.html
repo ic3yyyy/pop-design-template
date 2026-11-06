@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POP Design | Meu Site</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #111827;
+    --card: #1f2937;
+    --text: #ffffff;
+    --muted: #aab4c3;
+    --accent: #a78bfa;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 15% 20%, #43346b 0, transparent 35%),
+        radial-gradient(circle at 85% 80%, #253e62 0, transparent 35%),
+        var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+}
+
+header {
+    margin-bottom: 45px;
+}
+
+header h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: 5px;
+    margin-bottom: 15px;
+}
+
+header h1 span {
+    color: var(--accent);
+}
+
+header p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 500px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.card {
+    min-height: 190px;
+    background: rgba(31, 41, 55, 0.85);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: var(--accent);
+    background: #293449;
+}
+
+.icon {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 9px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+footer {
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.modal.active {
+    display: flex;
+    animation: fade 0.3s;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 650px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #1f2937;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 35px;
+    position: relative;
+    animation: appear 0.3s;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.modal-content p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 12px;
+    border: 1px solid #465268;
+    border-radius: 8px;
+    background: #111827;
+    color: white;
+    font: inherit;
+}
+
+.modal-content textarea {
+    resize: vertical;
+}
+
+.modal-content button.submit {
+    padding: 12px 25px;
+    background: var(--accent);
+    color: #111827;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+@keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes appear {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    body { padding: 20px; }
+    .grid { grid-template-columns: 1fr; }
+    .card { min-height: 150px; }
+    header { margin-bottom: 30px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>POP <span>DESIGN</span></h1>
+        <p>
+            Bem-vindo ao nosso espaço digital.
+            Explore nossas páginas e conheça um pouco mais sobre nosso trabalho.
+        </p>
+    </header>
+
+    <main class="grid">
+
+        <div class="card" onclick="openPage('welcome')">
+            <div class="icon">⌂</div>
+            <h2>Welcome</h2>
+            <p>Conheça nosso espaço e descubra o que temos a oferecer.</p>
+        </div>
+
+        <div class="card" onclick="openPage('team')">
+            <div class="icon">♙</div>
+            <h2>Our Team</h2>
+            <p>Saiba mais sobre nossa equipe e nossa história.</p>
+        </div>
+
+        <div class="card" onclick="openPage('work')">
+            <div class="icon">✧</div>
+            <h2>Our Work</h2>
+            <p>Explore nossos projetos e trabalhos realizados.</p>
+        </div>
+
+        <div class="card" onclick="openPage('contact')">
+            <div class="icon">✉</div>
+            <h2>Contact</h2>
+            <p>Entre em contato e envie uma mensagem.</p>
+        </div>
+
+    </main>
+
+    <footer>
+        © <span id="year"></span> POP Design. Todos os direitos reservados.
+    </footer>
+
+</div>
+
+<div class="modal" id="modal" onclick="closeOutside(event)">
+    <div class="modal-content">
+        <button class="close" onclick="closePage()">&times;</button>
+        <div id="page-content"></div>
+    </div>
+</div>
+
+<script>
+const pages = {
+    welcome: `
+        <h2>Welcome to Pop Design</h2>
+        <p>
+            Este é um espaço criado para apresentar ideias,
+            projetos e soluções de forma simples e moderna.
+        </p>
+        <p>
+            Explore as opções disponíveis e conheça um pouco
+            mais sobre nosso trabalho.
+        </p>
+    `,
+
+    team: `
+        <h2>Our Team</h2>
+        <p>
+            Nossa equipe é formada por pessoas criativas,
+            dedicadas e apaixonadas por tecnologia e inovação.
+        </p>
+        <p>
+            Trabalhamos juntos para transformar ideias
+            em experiências digitais.
+        </p>
+    `,
+
+    work: `
+        <h2>Our Work</h2>
+        <p>
+            Cada projeto representa uma oportunidade
+            de aprender, criar e desenvolver novas soluções.
+        </p>
+        <p>
+            Nosso objetivo é unir criatividade, tecnologia
+            e funcionalidade em cada trabalho.
+        </p>
+    `,
+
+    contact: `
+        <h2>Contact Us</h2>
+        <p>Preencha os campos abaixo para enviar uma mensagem.</p>
+
+        <form id="contact-form">
+            <input type="text" placeholder="Seu nome" required>
+            <input type="email" placeholder="Seu e-mail" required>
+            <textarea rows="5" placeholder="Sua mensagem" required></textarea>
+            <button class="submit" type="submit">Enviar mensagem</button>
+        </form>
+
+        <p id="form-message"></p>
+    `
+};
+
+function openPage(page) {
+    document.getElementById("page-content").innerHTML = pages[page];
+    document.getElementById("modal").classList.add("active");
+
+    const form = document.getElementById("contact-form");
+
+    if (form) {
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            document.getElementById("form-message").textContent =
+                "Formulario demonstrativo enviado! Para receber mensagens, e necessario configurar um servico de e-mail.";
+            form.reset();
+        });
+    }
+}
+
+function closePage() {
+    document.getElementById("modal").classList.remove("active");
+}
+
+function closeOutside(event) {
+    if (event.target.id === "modal") {
+        closePage();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") closePage();
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
